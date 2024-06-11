@@ -110,3 +110,13 @@ restock_list = {
 }
 print(restock_inventory(current_inventory, restock_list))
 
+
+# Problem 6: Calculate GPA
+def calculate_gpa(report_card):
+  gpa = 0.00
+  letterGrades = {"A": 4.00, "B": 3.00, "C": 2.00, "D":1.00, "F":0.00}
+  for i in report_card.values():
+    gpa += letterGrades.get(i)
+  return gpa/len(report_card)
+report_card = {"Math": "A", "Science": "C", "History": "A", "Art": "B", "English": "B", "Spanish": "A"}
+print(calculate_gpa(report_card))
