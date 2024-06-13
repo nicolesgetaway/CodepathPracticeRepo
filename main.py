@@ -36,20 +36,40 @@ def multiples_of_five():
     print(i)
 multiples_of_five()
 
-# Unit 2
+# Unit 2, Session 1, Problem Set A
 # Problem 1: Subsequences
+# This solution finds subsequences, but doesn't maintain relative order
+"""
 def is_subsequence(lst, sequence):
   a = []
   for i in lst:
     for j in sequence:
       if i == j:
-        a.append(i)
+        [a.append(i) for i in sequence if i not in a] # prevents duplicates returning as True
   if a == sequence:
     return "True"
   else:
     return "False"
 lst = [5, 1, 22, 25, 6, -1, 8, 10]
-sequence = [1, 6, -1, 10]
+sequence = [1, -1, 6, 10] # should be False, returns True
+print(is_subsequence(lst, sequence))
+"""
+
+# Corrected solution that satisfies all tests cases (duplicates and out-of-order)
+def is_subsequence(lst, sequence):
+  x = 0
+  y = 0
+  while x < len(sequence) and y < len(lst):
+    if sequence[x] == lst[y]:
+      x += 1
+    y += 1
+    if y == len(lst) and x != len(sequence):
+      return False
+  return True
+lst = [5, 1, 22, 25, 6, -1, 8, 10]
+# sequence = [1, -1, 6, 10] # False
+# sequence = [1, 6, 6, 10] # False
+sequence = [1, 6, -1, 10] # True
 print(is_subsequence(lst, sequence))
 
 # Problem 2: Create Dictionary
@@ -110,13 +130,51 @@ restock_list = {
 }
 print(restock_inventory(current_inventory, restock_list))
 
-
 # Problem 6: Calculate GPA
 def calculate_gpa(report_card):
   gpa = 0.00
   letterGrades = {"A": 4.00, "B": 3.00, "C": 2.00, "D":1.00, "F":0.00}
   for i in report_card.values():
-    gpa += letterGrades.get(i)
+    gpa += float(letterGrades.get(i))
   return gpa/len(report_card)
 report_card = {"Math": "A", "Science": "C", "History": "A", "Art": "B", "English": "B", "Spanish": "A"}
 print(calculate_gpa(report_card))
+
+# Problem 7: Highest Rated
+def highest_rated(books):
+  a = []
+  highest = {}
+  for book_dict in books:
+      for key, val in book_dict.items():
+        if key == 'rating':
+          a.append(val)
+      if book_dict.get("rating") == max(a):
+        highest = book_dict
+  return highest
+books = [
+    {"title": "Tomorrow, and Tomorrow, and Tomorrow",
+     "author": "Gabrielle Zevin",
+     "rating": 4.18
+    },
+    {"title": "A Fortune For Your Disaster",
+     "author": "Hanif Abdurraqib",
+     "rating": 4.47
+    },
+    {"title": "The Seven Husbands of Evenlyn Hugo",
+     "author": "Taylor Jenkins Reid",
+     "rating": 4.40
+    }
+]
+print(highest_rated(books)) 
+
+# Problem 8: Index-Value Map
+def index_to_value_map(lst):
+  d = {}
+  for i in range(len(lst)):
+    d[i] = lst[i]
+  return d
+lst = ["apple", "banana", "cherry"]
+print(index_to_value_map(lst))
+
+
+
