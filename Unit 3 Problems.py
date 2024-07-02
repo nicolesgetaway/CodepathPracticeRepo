@@ -2,7 +2,7 @@
 # Problem 1: Calling Mississippi
 def count_mississippi(limit):
   for num in range(1, limit):
-  print( f"{num} mississippi")
+    print( f"{num} mississippi")
 
 # Problem 2: Swap Ends
 def swap_ends(my_str):
@@ -94,3 +94,166 @@ def remove_char(s, n):
 s = "typpo"
 fixed_s = remove_char(s, 2)
 print(fixed_s)
+
+# Session 2 Problems
+# Problem 1: Sum of Strings
+def sum_of_number_strings(nums):
+  sum = 0
+  for num in nums:
+    sum += int(num)
+  return sum
+nums = ["10", "20", "30"]
+sum = sum_of_number_strings(nums)
+print(sum)    # Expected: 60 (as an int, not str -> '60')
+
+# Problem 2: Remove Duplicates
+def remove_duplicates(nums):
+  seen = []
+  [seen.append(x) for x in nums if x not in seen]
+  print (seen)
+nums = [1,1,1,2,3,4,4,5,6,6]
+remove_duplicates(nums)    # Expected: [1, 2, 3, 4, 5, 6]
+
+# Problem 3: Reverse Letters Only
+def reverse_only_letters(s):
+#   hold = ''
+#   """
+#   for idx in range(len(s)):
+#     if not s[idx].isalpha():
+#       hold += s[idx] + s[(len(s)-1) - idx]
+#     else:
+#       hold += s[(len(s)-1) - idx]
+#   return hold"""
+#   idxDash = []
+#   for i, elem in enumerate(s):
+#     if elem == '-':
+#       idxDash.append(i)
+#   print(idxDash)
+#   for i in range(len(s)):
+#     if i in idxDash:
+#       hold += '-'
+#     else:
+#       hold += s[(len(s)-1) - i]
+#   return hold
+# s = "a-bC-dEf-ghIj"
+# reversed_s = reverse_only_letters(s)
+# print(reversed_s)
+# Need to draw a diagram for this one, like a insertion sort...
+  hold = ''
+  idxDash = []
+  s_modified = ""
+  for i, elem in enumerate(s):
+    if elem == '-':
+      idxDash.append(i)
+    else:
+      s_modified += elem
+  print(idxDash)
+  print(s_modified)
+  i = len(s_modified)-1
+  dash_index = 0
+  while i >= 0:
+    print("index", i)
+    if dash_index in idxDash:
+      hold += '-'
+      idxDash.remove(dash_index)
+      print(idxDash)
+      # remove that index from idxDash
+    else:
+      hold += s_modified[i]
+      i -= 1
+    dash_index += 1
+  return hold
+
+def reverse_str(str):
+  return str[::-1]
+str = "abcdefg"
+print(reverse_str(str))
+
+
+# # Session 2 (Breakout Room Group Work)
+# I already solved the first 3 problems so commented the additional solutions
+# # Problem 1
+# # U: Get strings that are integers and return the sum of those integers
+
+# # P: Create sum variable, iterate over the list, and convert the strings to integers and add them to the sum variable
+
+# # def sum_of_number_strings(nums):
+# #   sum = 0
+# #   for num in nums:
+# #     sum += int(num)
+
+# #   return sum
+
+# # nums = ["10", "20", "30"]
+# # sum = sum_of_number_strings(nums)
+# # print(sum)
+
+# def remove_duplicates(nums):
+#   # encounter first occurence of element
+#   # save element
+#   # sequentially move through list until element no longer matches first occurence
+#   # do this until end of the list is reached
+#   index = 0
+#   while index < len(nums):
+#     curr_element = nums[index]
+#     while index < len(nums) and nums[index] == curr_element:
+#       index += 1
+#       nums.remove(curr_element)
+#       print("Removing", curr_element)
+#     index += 1
+#     print("Index (out of loop)", index)
+#   return nums
+# nums = [1, 1, 1, 2, 3, 4, 4, 4, 5, 6, 6, 7, 8, 8]
+# print(remove_duplicates(nums))
+
+# def reverse_only_letters(s):
+#   hold = ''
+#   idxDash = []
+#   s_modified = ""
+#   for i, elem in enumerate(s):
+#     if elem == '-':
+#       idxDash.append(i)
+#     else:
+#       s_modified += elem
+#   print(idxDash)
+#   print(s_modified)
+#   i = len(s_modified)-1
+#   dash_index = 0
+
+#   while i >= 0:
+#     print("index", i)
+#     if dash_index in idxDash:
+#       hold += '-'
+#       idxDash.remove(dash_index)
+#       print(idxDash)
+#       # remove that index from idxDash
+#     else:
+#       hold += s_modified[i]
+#       i -= 1
+#     dash_index += 1
+    
+#   return hold
+# s = "a-bC-dEf-ghIj"
+# reversed_s = reverse_only_letters(s)
+# print(reversed_s) # j-Ih-gfE-dCba
+
+def longest_uniform_substring(s):
+  max_length = 1
+  index = 0
+  while index < len(s) - 1:
+    current_length = 1
+    while index < len(s) - 1 and s[index] == s[index+1]:
+      index += 1
+      current_length += 1
+    if current_length > max_length:
+      max_length = current_length
+    index+= 1
+  return max_length
+
+s1 = "aabbbbCdAA"
+l1 = longest_uniform_substring(s1)
+print(l1)
+
+s2 = "abcdef"
+l2 = longest_uniform_substring(s2)
+print(l2)
